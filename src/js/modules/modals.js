@@ -4,7 +4,8 @@ const modals = () => {
     document.body.style.overflow = "";
   };
 
-  const bindModal = (triggerSelector, modalSelector, closeSelector) => {
+  // const bindModal = (triggerSelector, modalSelector, closeSelector) => {
+  const bindModal = ({ triggerSelector, modalSelector, closeSelector }) => {
     const triggers = document.querySelectorAll(triggerSelector),
       modal = document.querySelector(modalSelector),
       close = document.querySelector(closeSelector);
@@ -42,13 +43,17 @@ const modals = () => {
     }, time);
   };
 
-  bindModal(
-    ".popup_engineer_btn",
-    ".popup_engineer",
-    ".popup_engineer .popup_close"
-  );
+  bindModal({
+    triggerSelector: ".popup_engineer_btn",
+    modalSelector: ".popup_engineer",
+    closeSelector: ".popup_engineer .popup_close",
+  });
 
-  bindModal(".phone_link", ".popup", ".popup .popup_close");
+  bindModal({
+    triggerSelector: ".phone_link",
+    modalSelector: ".popup",
+    closeSelector: ".popup .popup_close",
+  });
 
   showModalbByTime(".popup", 60000);
 };

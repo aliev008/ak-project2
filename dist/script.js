@@ -14871,9 +14871,13 @@ var modals = function modals() {
   var closeModal = function closeModal(modal) {
     modal.style.display = "none";
     document.body.style.overflow = "";
-  };
+  }; // const bindModal = (triggerSelector, modalSelector, closeSelector) => {
 
-  var bindModal = function bindModal(triggerSelector, modalSelector, closeSelector) {
+
+  var bindModal = function bindModal(_ref) {
+    var triggerSelector = _ref.triggerSelector,
+        modalSelector = _ref.modalSelector,
+        closeSelector = _ref.closeSelector;
     var triggers = document.querySelectorAll(triggerSelector),
         modal = document.querySelector(modalSelector),
         close = document.querySelector(closeSelector);
@@ -14909,8 +14913,16 @@ var modals = function modals() {
     }, time);
   };
 
-  bindModal(".popup_engineer_btn", ".popup_engineer", ".popup_engineer .popup_close");
-  bindModal(".phone_link", ".popup", ".popup .popup_close");
+  bindModal({
+    triggerSelector: ".popup_engineer_btn",
+    modalSelector: ".popup_engineer",
+    closeSelector: ".popup_engineer .popup_close"
+  });
+  bindModal({
+    triggerSelector: ".phone_link",
+    modalSelector: ".popup",
+    closeSelector: ".popup .popup_close"
+  });
   showModalbByTime(".popup", 60000);
 };
 
