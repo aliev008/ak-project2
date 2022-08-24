@@ -1,11 +1,16 @@
 const modals = () => {
-  function bindModal(triggerSelector, modalSelector, closeSelector) {
-    const trigger = document.querySelectorAll(triggerSelector),
+  const closeModal = (modal) => {
+    modal.style.display = "none";
+    document.body.style.overflow = "";
+  };
+
+  const bindModal = (triggerSelector, modalSelector, closeSelector) => {
+    const triggers = document.querySelectorAll(triggerSelector),
       modal = document.querySelector(modalSelector),
       close = document.querySelector(closeSelector);
 
-    trigger.forEach((item) => {
-      item.addEventListener("click", (e) => {
+    triggers.forEach((trigger) => {
+      trigger.addEventListener("click", (e) => {
         if (e.target) {
           e.preventDefault();
         }
@@ -15,25 +20,21 @@ const modals = () => {
       });
     });
 
-    close.addEventListener("click", () => {
-      modal.style.display = "none";
-      document.body.style.overflow = "";
-    });
+    close.addEventListener("click", () => closeModal(modal));
 
     modal.addEventListener("click", (e) => {
       if (e.target === modal) {
-        modal.style.display = "none";
-        document.body.style.overflow = "";
+        closeModal(modal);
       }
     });
-  }
+  };
 
-  function showModalbByTime(selector, time) {
+  const showModalbByTime = (selector, time) => {
     setTimeout(() => {
       document.querySelector(selector).style.display = "block";
       document.body.style.overflow = "hidden";
     }, time);
-  }
+  };
 
   bindModal(
     ".popup_engineer_btn",
