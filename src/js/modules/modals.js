@@ -4,7 +4,6 @@ const modals = () => {
     document.body.style.overflow = "";
   };
 
-  // const bindModal = (triggerSelector, modalSelector, closeSelector) => {
   const bindModal = ({ triggerSelector, modalSelector, closeSelector }) => {
     const triggers = document.querySelectorAll(triggerSelector),
       modal = document.querySelector(modalSelector),
