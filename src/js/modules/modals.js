@@ -27,6 +27,12 @@ const modals = () => {
         closeModal(modal);
       }
     });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.keyCode === 27) {
+        closeModal(modal);
+      }
+    });
   };
 
   const showModalbByTime = (selector, time) => {

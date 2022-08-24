@@ -14895,6 +14895,11 @@ var modals = function modals() {
         closeModal(modal);
       }
     });
+    document.addEventListener("keydown", function (e) {
+      if (e.keyCode === 27) {
+        closeModal(modal);
+      }
+    });
   };
 
   var showModalbByTime = function showModalbByTime(selector, time) {
