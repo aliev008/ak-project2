@@ -36,13 +36,6 @@ const modals = () => {
         closeModal(modal);
       }
     });
-
-    // document.addEventListener("keydown", (e) => {
-    //   console.log(e);
-    //   if (e.key === "Escape") {
-    //     closeModal(modal);
-    //   }
-    // });
   };
 
   const showModalbByTime = (selector, time) => {
