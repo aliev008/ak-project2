@@ -10,7 +10,6 @@ const modals = () => {
     };
 
     const closeModalByKeydown = (event) => {
-      console.log(event);
       if (event.key === "Escape") {
         closeModal(modal);
         document.removeEventListener("keydown", closeModalByKeydown);
