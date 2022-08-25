@@ -1,20 +1,24 @@
 const modals = () => {
+  const closeModal = (modal) => {
+    if (modal.style !== undefined) {
+      modal.style.display = "none";
+    } else {
+      document.querySelector(modal).style.display = "none";
+    }
+    document.body.style.overflow = "";
+  };
+
+  const closeModalByKeydown = (event, modal) => {
+    if (event.key === "Escape") {
+      closeModal(modal);
+      document.removeEventListener("keydown", closeModalByKeydown);
+    }
+  };
+
   const bindModal = ({ triggerSelector, modalSelector, closeSelector }) => {
     const triggers = document.querySelectorAll(triggerSelector),
       modal = document.querySelector(modalSelector),
       close = document.querySelector(closeSelector);
-
-    const closeModal = (modal) => {
-      modal.style.display = "none";
-      document.body.style.overflow = "";
-    };
-
-    const closeModalByKeydown = (event) => {
-      if (event.key === "Escape") {
-        closeModal(modal);
-        document.removeEventListener("keydown", closeModalByKeydown);
-      }
-    };
 
     triggers.forEach((trigger) => {
       trigger.addEventListener("click", (e) => {
@@ -24,7 +28,9 @@ const modals = () => {
 
         modal.style.display = "block";
         document.body.style.overflow = "hidden";
-        document.addEventListener("keydown", closeModalByKeydown);
+        document.addEventListener("keydown", (e) =>
+          closeModalByKeydown(e, modal)
+        );
       });
     });
 
@@ -41,6 +47,9 @@ const modals = () => {
     setTimeout(() => {
       document.querySelector(selector).style.display = "block";
       document.body.style.overflow = "hidden";
+      document.addEventListener("keydown", (e) =>
+        closeModalByKeydown(e, selector)
+      );
     }, time);
   };
 
@@ -56,7 +65,7 @@ const modals = () => {
     closeSelector: ".popup .popup_close",
   });
 
-  showModalbByTime(".popup", 60000);
+  showModalbByTime(".popup", 3000);
 };
 
 export default modals;
