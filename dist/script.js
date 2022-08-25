@@ -14868,12 +14868,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var modals = function modals() {
-  var closeModal = function closeModal(modal) {
-    modal.style.display = "none";
-    document.body.style.overflow = "";
-  }; // const bindModal = (triggerSelector, modalSelector, closeSelector) => {
-
-
   var bindModal = function bindModal(_ref) {
     var triggerSelector = _ref.triggerSelector,
         modalSelector = _ref.modalSelector,
@@ -14881,6 +14875,21 @@ var modals = function modals() {
     var triggers = document.querySelectorAll(triggerSelector),
         modal = document.querySelector(modalSelector),
         close = document.querySelector(closeSelector);
+
+    var closeModal = function closeModal(modal) {
+      modal.style.display = "none";
+      document.body.style.overflow = "";
+    };
+
+    var closeModalByKeydown = function closeModalByKeydown(event) {
+      console.log(event);
+
+      if (event.key === "Escape") {
+        closeModal(modal);
+        document.removeEventListener("keydown", closeModalByKeydown);
+      }
+    };
+
     triggers.forEach(function (trigger) {
       trigger.addEventListener("click", function (e) {
         if (e.target) {
@@ -14889,6 +14898,7 @@ var modals = function modals() {
 
         modal.style.display = "block";
         document.body.style.overflow = "hidden";
+        document.addEventListener("keydown", closeModalByKeydown);
       });
     });
     close.addEventListener("click", function () {
@@ -14898,12 +14908,12 @@ var modals = function modals() {
       if (e.target === modal) {
         closeModal(modal);
       }
-    });
-    document.addEventListener("keydown", function (e) {
-      if (e.keyCode === 27) {
-        closeModal(modal);
-      }
-    });
+    }); // document.addEventListener("keydown", (e) => {
+    //   console.log(e);
+    //   if (e.key === "Escape") {
+    //     closeModal(modal);
+    //   }
+    // });
   };
 
   var showModalbByTime = function showModalbByTime(selector, time) {
