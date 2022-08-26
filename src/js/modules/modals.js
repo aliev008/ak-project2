@@ -65,7 +65,7 @@ const modals = () => {
     closeSelector: ".popup .popup_close",
   });
 
-  showModalbByTime(".popup", 3000);
+  showModalbByTime(".popup", 60000);
 };
 
 export default modals;
