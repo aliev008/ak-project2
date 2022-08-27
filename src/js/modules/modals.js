@@ -1,4 +1,4 @@
-const modals = () => {
+export const modals = () => {
   const closeModal = (modal) => {
     if (modal.style !== undefined) {
       modal.style.display = "none";
@@ -68,4 +68,3 @@ const modals = () => {
   showModalbByTime(".popup", 60000);
 };
 
-export default modals;
