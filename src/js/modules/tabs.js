@@ -34,6 +34,15 @@ export const tabs = ({
     }
   });
 
+  tabs.forEach((tab, index) => {
+    tab.childNodes.forEach((child) => {
+      child.addEventListener("focus", (e) => {
+        hideTabContent();
+        showTabContent(index);
+      });
+    });
+  });
+
   hideTabContent();
   showTabContent();
 };
