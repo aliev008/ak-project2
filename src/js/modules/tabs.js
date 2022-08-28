@@ -18,12 +18,13 @@ export const tabs = ({
     tabs[i].classList.add(activeClass);
   };
 
-  header.addEventListener("click", (e) => {
-    const target = e.target;
+  const handleAction = (event) => {
+    const { target } = event;
+
     if (
       target &&
-      (target.classList.contains(tabSelector.replace(".", "")) ||
-        target.parentNode.classList.contains(tabSelector.replace(".", "")))
+      (target.classList.contains(tabSelector.replace(/\./, "")) ||
+        target.parentNode.classList.contains(tabSelector.replace(/\./, "")))
     ) {
       tabs.forEach((tab, index) => {
         if (target === tab || target.parentNode === tab) {
@@ -32,15 +33,16 @@ export const tabs = ({
         }
       });
     }
+  };
+
+  header.addEventListener("click", (event) => {
+    handleAction(event);
   });
 
-  tabs.forEach((tab, index) => {
-    tab.childNodes.forEach((child) => {
-      child.addEventListener("focus", (e) => {
-        hideTabContent();
-        showTabContent(index);
-      });
-    });
+  header.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      handleAction(event);
+    }
   });
 
   hideTabContent();
