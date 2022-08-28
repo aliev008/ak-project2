@@ -12,7 +12,7 @@ export const forms = () => {
   const message = {
     loading: "Загрузка...",
     success: "Спасибо! Наши специалисты свяжутся с Вами в ближайшее время",
-    failue: "Что-то пошло не так :-(",
+    failure: "Что-то пошло не так :-(",
   };
 
   const postData = async (url, data) => {
@@ -41,7 +41,7 @@ export const forms = () => {
 
       const formData = new FormData(form);
 
-      postData("assets/server.php", formData)
+      postData("./assets/server.php", formData)
         .then((result) => {
           console.log(result);
           statusMessage.textContent = message.success;
