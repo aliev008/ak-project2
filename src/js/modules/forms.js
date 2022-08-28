@@ -1,7 +1,7 @@
 export const forms = () => {
   const pageForms = document.querySelectorAll("form"),
-    inputs = document.querySelectorAll("input");
-  phoneInputs = document.querySelectorAll('input[name="user_phone"]');
+    inputs = document.querySelectorAll("input"),
+    phoneInputs = document.querySelectorAll('input[name="user_phone"]');
 
   phoneInputs.forEach((phoneInput) => {
     phoneInput.addEventListener("input", (e) => {
