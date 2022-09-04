@@ -1,30 +1,26 @@
+import { closeModal, closeModalByKeydown } from "./index";
+
 export const modals = () => {
-  const closeModal = (modal) => {
-    if (modal.style !== undefined) {
-      modal.style.display = "none";
-    } else {
-      document.querySelector(modal).style.display = "none";
-    }
-    document.body.style.overflow = "";
-  };
-
-  const closeModalByKeydown = (event, modal) => {
-    if (event.key === "Escape") {
-      closeModal(modal);
-      document.removeEventListener("keydown", closeModalByKeydown);
-    }
-  };
-
-  const bindModal = ({ triggerSelector, modalSelector, closeSelector }) => {
+  const bindModal = ({
+    triggerSelector,
+    modalSelector,
+    closeSelector,
+    closeClickOverlay = true,
+  }) => {
     const triggers = document.querySelectorAll(triggerSelector),
       modal = document.querySelector(modalSelector),
-      close = document.querySelector(closeSelector);
+      close = document.querySelector(closeSelector),
+      windows = document.querySelectorAll("[data-modal]");
 
     triggers.forEach((trigger) => {
       trigger.addEventListener("click", (e) => {
         if (e.target) {
           e.preventDefault();
         }
+
+        windows.forEach((window) => {
+          window.style.display = "none";
+        });
 
         modal.style.display = "block";
         document.body.style.overflow = "hidden";
@@ -34,16 +30,24 @@ export const modals = () => {
       });
     });
 
-    close.addEventListener("click", () => closeModal(modal));
+    close.addEventListener("click", () => {
+      closeModal(modal);
+      windows.forEach((window) => {
+        window.style.display = "none";
+      });
+    });
 
     modal.addEventListener("click", (e) => {
-      if (e.target === modal) {
+      if (e.target === modal && closeClickOverlay) {
         closeModal(modal);
+        windows.forEach((window) => {
+          window.style.display = "none";
+        });
       }
     });
   };
 
-  const showModalbByTime = (selector, time) => {
+  const showModalByTime = (selector, time) => {
     setTimeout(() => {
       document.querySelector(selector).style.display = "block";
       document.body.style.overflow = "hidden";
@@ -65,6 +69,25 @@ export const modals = () => {
     closeSelector: ".popup .popup_close",
   });
 
-  showModalbByTime(".popup", 60000);
-};
+  bindModal({
+    triggerSelector: ".popup_calc_btn",
+    modalSelector: ".popup_calc",
+    closeSelector: ".popup_calc .popup_calc_close",
+  });
 
+  bindModal({
+    triggerSelector: ".popup_calc_button",
+    modalSelector: ".popup_calc_profile",
+    closeSelector: ".popup_calc_profile_close",
+    closeClickOverlay: false,
+  });
+
+  bindModal({
+    triggerSelector: ".popup_calc_profile_button",
+    modalSelector: ".popup_calc_end",
+    closeSelector: ".popup_calc_end_close",
+    closeClickOverlay: false,
+  });
+
+  showModalByTime(".popup", 60000);
+};

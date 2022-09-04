@@ -1,13 +1,10 @@
-export const forms = () => {
-  const pageForms = document.querySelectorAll("form"),
-    inputs = document.querySelectorAll("input"),
-    phoneInputs = document.querySelectorAll('input[name="user_phone"]');
+import { checkNumInputs, closeModal, resetState } from "./index.js";
 
-  phoneInputs.forEach((phoneInput) => {
-    phoneInput.addEventListener("input", (e) => {
-      phoneInput.value = phoneInput.value.replace(/\D/, "");
-    });
-  });
+export const forms = (state) => {
+  const pageForms = document.querySelectorAll("form"),
+    inputs = document.querySelectorAll("input");
+
+  checkNumInputs('input[name="user_phone"]');
 
   const message = {
     loading: "Загрузка...",
@@ -40,6 +37,11 @@ export const forms = () => {
       form.appendChild(statusMessage);
 
       const formData = new FormData(form);
+      if (form.getAttribute("data-calc") === "end") {
+        for (let key in state) {
+          formData.append(key, state[key]);
+        }
+      }
 
       postData("./assets/server.php", formData)
         .then((result) => {
@@ -55,6 +57,8 @@ export const forms = () => {
           setTimeout(() => {
             statusMessage.remove();
           }, 5000);
+          closeModal(".popup_calc_end");
+          resetState(state);
         });
     });
   });
