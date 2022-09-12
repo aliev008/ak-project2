@@ -5,7 +5,26 @@ export const changeModalState = (state) => {
     windowWidth = document.querySelectorAll("#width"),
     windowHeight = document.querySelectorAll("#height"),
     windowType = document.querySelectorAll("#view_type"),
-    windowProfile = document.querySelectorAll(".checkbox");
+    windowProfile = document.querySelectorAll(".checkbox"),
+    windowProfileTypes = document.querySelectorAll(".checkbox-custom");
+
+  windowProfileTypes.forEach((type, index) => {
+    type.setAttribute("tabindex", 0);
+    type.style.outlineColor = "#ffc600";
+    type.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        windowProfile.forEach((box) => {
+          box.checked = false;
+        });
+
+        windowProfile[index].checked = true;
+        index === 0
+          ? (state["profile"] = "Холодное")
+          : (state["profile"] = "Тёплое");
+        console.log(state);
+      }
+    });
+  });
 
   checkNumInputs("#width");
   checkNumInputs("#height");
@@ -19,7 +38,7 @@ export const changeModalState = (state) => {
             break;
           case "INPUT":
             if (elem.getAttribute("type") === "checkbox") {
-              i === 0 ? (state[prop] = "Холодное") : (state[prop] = "Горячее");
+              i === 0 ? (state[prop] = "Холодное") : (state[prop] = "Тёплое");
               elems.forEach((box, j) => {
                 box.checked = false;
                 if (i == j) {
