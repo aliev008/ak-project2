@@ -1,4 +1,4 @@
-import { closeModal, closeModalByKeydown } from "./index";
+import { closeModal, closeModalByKeydown, showModal } from "./index";
 
 export const modals = () => {
   const bindModal = ({
@@ -18,15 +18,36 @@ export const modals = () => {
           e.preventDefault();
         }
 
+        // Остановился тут, нужно короче реализовать логику, при которой я вытаскиваю нужный мне аттрибут
+        // console.log(trigger.attributes);
+
+        // modal.querySelectorAll('input').forEach((input) => console.log(input.value));
+        // console.log([...modal.querySelectorAll('input')].every((input) => input.value !== ''));
+        // console.log(Array.isArray(modal.querySelectorAll('input')));
+        // if ([...modal.querySelectorAll('input')].some((input) => input.value === '') && modal.getAttribute('data-modal') !== '1') {
+        //   console.log(modal.getAttribute('data-modal'));
+        //     return null;
+        // }
+
+        // console.log(modal.getAttribute('data-modal') !== '1');
+        console.log(`modal:`, modal);
+        console.log(
+          [...modal.querySelectorAll("input")].some(
+            (input) => input.value === ""
+          )
+        );
+
+        // if ([...modal.querySelectorAll('input')].some((input) => input.value === '') && modal.getAttribute('data-modal') !== '1') {
+        //   console.log(modal.getAttribute('data-modal'));
+        //     return null;
+        // }
+
         windows.forEach((window) => {
-          window.style.display = "none";
+          closeModal(window);
         });
 
-        modal.style.display = "block";
-        document.body.style.overflow = "hidden";
-        document.addEventListener("keydown", (e) =>
-          closeModalByKeydown(e, modal)
-        );
+        showModal(modal);
+        clearInterval(showModalByTime);
       });
     });
 
@@ -45,16 +66,6 @@ export const modals = () => {
         });
       }
     });
-  };
-
-  const showModalByTime = (selector, time) => {
-    setTimeout(() => {
-      document.querySelector(selector).style.display = "block";
-      document.body.style.overflow = "hidden";
-      document.addEventListener("keydown", (e) =>
-        closeModalByKeydown(e, selector)
-      );
-    }, time);
   };
 
   bindModal({
@@ -89,5 +100,8 @@ export const modals = () => {
     closeClickOverlay: false,
   });
 
-  showModalByTime(".popup", 60000);
+  const showModalByTime = setTimeout(
+    () => showModal(document.querySelector(".popup")),
+    5000
+  );
 };
