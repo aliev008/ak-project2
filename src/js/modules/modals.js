@@ -10,7 +10,8 @@ export const modals = () => {
     const triggers = document.querySelectorAll(triggerSelector),
       modal = document.querySelector(modalSelector),
       close = document.querySelector(closeSelector),
-      windows = document.querySelectorAll("[data-modal]");
+      windows = document.querySelectorAll("[data-modal]"),
+      calcWindows = document.querySelectorAll("[data-modal-calc]");
 
     triggers.forEach((trigger) => {
       trigger.addEventListener("click", (e) => {
@@ -18,36 +19,27 @@ export const modals = () => {
           e.preventDefault();
         }
 
-        // Остановился тут, нужно короче реализовать логику, при которой я вытаскиваю нужный мне аттрибут
-        // console.log(trigger.attributes);
-
-        // modal.querySelectorAll('input').forEach((input) => console.log(input.value));
-        // console.log([...modal.querySelectorAll('input')].every((input) => input.value !== ''));
-        // console.log(Array.isArray(modal.querySelectorAll('input')));
-        // if ([...modal.querySelectorAll('input')].some((input) => input.value === '') && modal.getAttribute('data-modal') !== '1') {
-        //   console.log(modal.getAttribute('data-modal'));
-        //     return null;
-        // }
-
-        // console.log(modal.getAttribute('data-modal') !== '1');
-        console.log(`modal:`, modal);
-        console.log(
-          [...modal.querySelectorAll("input")].some(
-            (input) => input.value === ""
-          )
-        );
-
-        // if ([...modal.querySelectorAll('input')].some((input) => input.value === '') && modal.getAttribute('data-modal') !== '1') {
-        //   console.log(modal.getAttribute('data-modal'));
-        //     return null;
-        // }
-
-        windows.forEach((window) => {
-          closeModal(window);
-        });
-
-        showModal(modal);
-        clearInterval(showModalByTime);
+        if (modal.getAttribute("data-modal-calc")) {
+          if (modal.getAttribute("data-modal-calc") !== "1") {
+            if (
+              [
+                ...calcWindows[
+                  parseInt(modal.getAttribute("data-modal-calc"), 10) - 2
+                ].querySelectorAll("input"),
+              ].some((input) => input.value === "")
+            ) {
+              return null;
+            }
+          }
+          windows.forEach((window) => {
+            closeModal(window);
+          });
+          calcWindows.forEach((window) => {
+            closeModal(window);
+          });
+          showModal(modal);
+          clearInterval(showModalByTime);
+        }
       });
     });
 
@@ -102,6 +94,6 @@ export const modals = () => {
 
   const showModalByTime = setTimeout(
     () => showModal(document.querySelector(".popup")),
-    5000
+    60000
   );
 };
