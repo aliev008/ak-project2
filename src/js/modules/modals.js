@@ -39,6 +39,7 @@ export const modals = () => {
         console.log(modalForm);
 
         modalForm.addEventListener("submit", (e) => {
+          e.preventDefault();
           windows.forEach((window) => {
             closeModal(window);
           });
