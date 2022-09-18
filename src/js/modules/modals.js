@@ -14,23 +14,12 @@ export const modals = () => {
       calcWindows = document.querySelectorAll("[data-modal-calc]");
 
     triggers.forEach((trigger) => {
-      trigger.addEventListener("click", (e) => {
-        if (e.target) {
-          e.preventDefault();
-        }
-
-        if (modal.getAttribute("data-modal-calc")) {
-          if (modal.getAttribute("data-modal-calc") !== "1") {
-            if (
-              [
-                ...calcWindows[
-                  parseInt(modal.getAttribute("data-modal-calc"), 10) - 2
-                ].querySelectorAll("input"),
-              ].some((input) => input.value === "")
-            ) {
-              return null;
-            }
+      if (trigger.getAttribute("type") !== "submit") {
+        trigger.addEventListener("click", (e) => {
+          if (e.target) {
+            e.preventDefault();
           }
+
           windows.forEach((window) => {
             closeModal(window);
           });
@@ -39,8 +28,27 @@ export const modals = () => {
           });
           showModal(modal);
           clearInterval(showModalByTime);
-        }
-      });
+          console.log(`Inside test`, trigger.getAttribute("type"));
+        });
+      } else {
+        let previousModalWindow =
+          parseInt(modal.getAttribute("data-modal-calc"), 10) - 1;
+        let modalForm = document
+          .querySelector(`[data-modal-calc='${previousModalWindow}']`)
+          .querySelector("form");
+        console.log(modalForm);
+
+        modalForm.addEventListener("submit", (e) => {
+          windows.forEach((window) => {
+            closeModal(window);
+          });
+          calcWindows.forEach((window) => {
+            closeModal(window);
+          });
+          showModal(modal);
+          clearInterval(showModalByTime);
+        });
+      }
     });
 
     close.addEventListener("click", () => {

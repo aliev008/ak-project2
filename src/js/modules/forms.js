@@ -29,37 +29,43 @@ export const forms = (state) => {
   };
 
   pageForms.forEach((form) => {
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
+    if (
+      !form.hasAttribute("data-calc") ||
+      form.getAttribute("data-calc") === "end"
+    ) {
+      form.addEventListener("submit", (e) => {
+        console.log(e);
+        e.preventDefault();
 
-      let statusMessage = document.createElement("div");
-      statusMessage.classList.add("status");
-      form.appendChild(statusMessage);
+        let statusMessage = document.createElement("div");
+        statusMessage.classList.add("status");
+        form.appendChild(statusMessage);
 
-      const formData = new FormData(form);
-      if (form.getAttribute("data-calc") === "end") {
-        for (let key in state) {
-          formData.append(key, state[key]);
+        const formData = new FormData(form);
+        if (form.getAttribute("data-calc") === "end") {
+          for (let key in state) {
+            formData.append(key, state[key]);
+          }
         }
-      }
 
-      postData("./assets/server.php", formData)
-        .then((result) => {
-          console.log(result);
-          statusMessage.textContent = message.success;
-        })
-        .catch((error) => {
-          console.log(error);
-          statusMessage.textContent = message.failure;
-        })
-        .finally(() => {
-          clearInputs();
-          setTimeout(() => {
-            statusMessage.remove();
-          }, 5000);
-          closeModal(".popup_calc_end");
-          resetState(state);
-        });
-    });
+        postData("./assets/server.php", formData)
+          .then((result) => {
+            console.log(result);
+            statusMessage.textContent = message.success;
+          })
+          .catch((error) => {
+            console.log(error);
+            statusMessage.textContent = message.failure;
+          })
+          .finally(() => {
+            clearInputs();
+            setTimeout(() => {
+              statusMessage.remove();
+            }, 5000);
+            closeModal(".popup_calc_end");
+            resetState(state);
+          });
+      });
+    }
   });
 };
