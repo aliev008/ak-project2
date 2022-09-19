@@ -27,7 +27,6 @@ export const modals = () => {
           });
           showModal(modal);
           clearInterval(showModalByTime);
-          console.log(`Inside test`, trigger.getAttribute("type"));
         });
       } else {
         const previousModalWindowNumber =

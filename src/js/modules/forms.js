@@ -5,7 +5,6 @@ export const forms = (state) => {
     inputs = document.querySelectorAll("input"),
     checkboxInputs = document.querySelectorAll(".checkbox"),
     windowTypeInputs = document.querySelector("#view_type");
-  console.log(windowTypeInputs);
 
   checkNumInputs('input[name="user_phone"]');
 
