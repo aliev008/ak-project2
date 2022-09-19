@@ -1021,8 +1021,15 @@ textarea:focus {
   outline: none;
 }
 
+.popup_calc_profile_content .checkbox-label {
+  position: relative;
+}
+
 .popup_calc_profile_content .checkbox {
-  display: none;
+  position: absolute;
+  opacity: 0;
+  left: 0.5rem;
+  top: 1rem;
 }
 
 .popup_calc_profile_content .checkbox-custom {

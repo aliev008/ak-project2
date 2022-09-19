@@ -1,56 +1,69 @@
+import { closeModal, showModal } from "./index";
+
 export const modals = () => {
-  const closeModal = (modal) => {
-    if (modal.style !== undefined) {
-      modal.style.display = "none";
-    } else {
-      document.querySelector(modal).style.display = "none";
-    }
-    document.body.style.overflow = "";
-  };
-
-  const closeModalByKeydown = (event, modal) => {
-    if (event.key === "Escape") {
-      closeModal(modal);
-      document.removeEventListener("keydown", closeModalByKeydown);
-    }
-  };
-
-  const bindModal = ({ triggerSelector, modalSelector, closeSelector }) => {
+  const bindModal = ({
+    triggerSelector,
+    modalSelector,
+    closeSelector,
+    closeClickOverlay = true,
+  }) => {
     const triggers = document.querySelectorAll(triggerSelector),
       modal = document.querySelector(modalSelector),
-      close = document.querySelector(closeSelector);
+      close = document.querySelector(closeSelector),
+      windows = document.querySelectorAll("[data-modal]"),
+      calcWindows = document.querySelectorAll("[data-modal-calc]");
 
     triggers.forEach((trigger) => {
-      trigger.addEventListener("click", (e) => {
-        if (e.target) {
-          e.preventDefault();
-        }
+      if (trigger.getAttribute("type") !== "submit") {
+        trigger.addEventListener("click", (e) => {
+          if (e.target) {
+            e.preventDefault();
+          }
+          windows.forEach((window) => {
+            closeModal(window);
+          });
+          calcWindows.forEach((window) => {
+            closeModal(window);
+          });
+          showModal(modal);
+          clearInterval(showModalByTime);
+        });
+      } else {
+        const previousModalWindowNumber =
+            parseInt(modal.getAttribute("data-modal-calc"), 10) - 1,
+          modalForm = document
+            .querySelector(`[data-modal-calc='${previousModalWindowNumber}']`)
+            .querySelector("form");
 
-        modal.style.display = "block";
-        document.body.style.overflow = "hidden";
-        document.addEventListener("keydown", (e) =>
-          closeModalByKeydown(e, modal)
-        );
+        modalForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          windows.forEach((window) => {
+            closeModal(window);
+          });
+          calcWindows.forEach((window) => {
+            closeModal(window);
+          });
+          showModal(modal);
+          clearInterval(showModalByTime);
+        });
+      }
+    });
+
+    close.addEventListener("click", () => {
+      closeModal(modal);
+      windows.forEach((window) => {
+        window.style.display = "none";
       });
     });
 
-    close.addEventListener("click", () => closeModal(modal));
-
     modal.addEventListener("click", (e) => {
-      if (e.target === modal) {
+      if (e.target === modal && closeClickOverlay) {
         closeModal(modal);
+        windows.forEach((window) => {
+          window.style.display = "none";
+        });
       }
     });
-  };
-
-  const showModalbByTime = (selector, time) => {
-    setTimeout(() => {
-      document.querySelector(selector).style.display = "block";
-      document.body.style.overflow = "hidden";
-      document.addEventListener("keydown", (e) =>
-        closeModalByKeydown(e, selector)
-      );
-    }, time);
   };
 
   bindModal({
@@ -65,6 +78,28 @@ export const modals = () => {
     closeSelector: ".popup .popup_close",
   });
 
-  showModalbByTime(".popup", 60000);
-};
+  bindModal({
+    triggerSelector: ".popup_calc_btn",
+    modalSelector: ".popup_calc",
+    closeSelector: ".popup_calc .popup_calc_close",
+  });
 
+  bindModal({
+    triggerSelector: ".popup_calc_button",
+    modalSelector: ".popup_calc_profile",
+    closeSelector: ".popup_calc_profile_close",
+    closeClickOverlay: false,
+  });
+
+  bindModal({
+    triggerSelector: ".popup_calc_profile_button",
+    modalSelector: ".popup_calc_end",
+    closeSelector: ".popup_calc_end_close",
+    closeClickOverlay: false,
+  });
+
+  const showModalByTime = setTimeout(
+    () => showModal(document.querySelector(".popup")),
+    60000
+  );
+};
