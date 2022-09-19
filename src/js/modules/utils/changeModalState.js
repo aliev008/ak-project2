@@ -24,7 +24,6 @@ export const changeModalState = (state) => {
         index === 0
           ? (state["profile"] = "Холодное")
           : (state["profile"] = "Тёплое");
-        console.log(state);
       }
     });
   });
@@ -35,7 +34,6 @@ export const changeModalState = (state) => {
     window.addEventListener("keydown", (event) => {
       if (event.key === 'Enter') {
         state["form"] = index;
-        console.log(state);
       }
     });
   });
@@ -68,7 +66,6 @@ export const changeModalState = (state) => {
             state[prop] = elem.value;
             break;
         }
-        console.log(state);
       });
     });
   };

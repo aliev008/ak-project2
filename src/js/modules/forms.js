@@ -42,7 +42,6 @@ export const forms = (state) => {
       form.getAttribute("data-calc") === "end"
     ) {
       form.addEventListener("submit", (e) => {
-        console.log(e);
         e.preventDefault();
 
         let statusMessage = document.createElement("div");
@@ -58,11 +57,9 @@ export const forms = (state) => {
 
         postData("./assets/server.php", formData)
           .then((result) => {
-            console.log(result);
             statusMessage.textContent = message.success;
           })
           .catch((error) => {
-            console.log(error);
             statusMessage.textContent = message.failure;
           })
           .finally(() => {
