@@ -8,6 +8,9 @@ export const changeModalState = (state) => {
     windowProfile = document.querySelectorAll(".checkbox"),
     windowProfileTypes = document.querySelectorAll(".checkbox-custom");
 
+    // Default State setup
+    state["form"] = 0;
+
   windowProfileTypes.forEach((type, index) => {
     type.setAttribute("tabindex", 0);
     type.style.outlineColor = "#ffc600";
@@ -21,6 +24,17 @@ export const changeModalState = (state) => {
         index === 0
           ? (state["profile"] = "Холодное")
           : (state["profile"] = "Тёплое");
+        console.log(state);
+      }
+    });
+  });
+
+  windowForm.forEach((window, index) => {
+    window.setAttribute("tabindex", 0);
+    window.style.outlineColor = "#ffc600";
+    window.addEventListener("keydown", (event) => {
+      if (event.key === 'Enter') {
+        state["form"] = index;
         console.log(state);
       }
     });
@@ -41,6 +55,7 @@ export const changeModalState = (state) => {
               i === 0 ? (state[prop] = "Холодное") : (state[prop] = "Тёплое");
               elems.forEach((box, j) => {
                 box.checked = false;
+                box.required = false;
                 if (i == j) {
                   box.checked = true;
                 }

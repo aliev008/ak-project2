@@ -919,7 +919,8 @@
         <h2>Калькулятор</h2>
         <h3>Выберите тип остекления <br>и его профиль</h3>
         <form action="#" data-calc>
-          <select class="form-control" name="view" id="view_type">
+          <select class="form-control" name="view" id="view_type" required>
+            <option value="" disabled selected>Тип остекления</option>
             <option value="tree">Деревянное остекление</option>
             <option value="aluminum">Алюминиевое остекление</option>
             <option value="plastic">Остекление пластиковыми рамами</option>
@@ -927,14 +928,14 @@
             <option value="overhang">Остекление с выносом</option>
           </select>
           <img src="assets/img/modal_calc/icon_cold.png" alt="">
-          <label>
-            <input class="checkbox" type="checkbox" name="checkbox-test">
+          <label class="checkbox-label">
+            <input class="checkbox" type="checkbox" name="checkbox-test" required>
             <span class="checkbox-custom" id="cold"></span>
             <span class="label">Холодное</span>
           </label>
           <img src="assets/img/modal_calc/icon_warm.png" alt="">
-          <label>
-            <input class="checkbox" type="checkbox" name="checkbox-test">
+          <label class="checkbox-label">
+            <input class="checkbox" type="checkbox" name="checkbox-test"> 
             <span class="checkbox-custom" id="warm"></span>
             <span class="label">Теплое</span>
           </label>

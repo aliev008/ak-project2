@@ -2,7 +2,10 @@ import { checkNumInputs, closeModal, resetState } from "./index.js";
 
 export const forms = (state) => {
   const pageForms = document.querySelectorAll("form"),
-    inputs = document.querySelectorAll("input");
+    inputs = document.querySelectorAll("input"),
+    checkboxInputs = document.querySelectorAll(".checkbox"),
+    windowTypeInputs = document.querySelector("#view_type");
+  console.log(windowTypeInputs);
 
   checkNumInputs('input[name="user_phone"]');
 
@@ -26,6 +29,12 @@ export const forms = (state) => {
     inputs.forEach((input) => {
       input.value = "";
     });
+    checkboxInputs.forEach((checkbox) => {
+      checkbox.checked = false;
+      checkbox.required = true;
+    });
+
+    windowTypeInputs.value = "";
   };
 
   pageForms.forEach((form) => {
@@ -62,8 +71,10 @@ export const forms = (state) => {
             setTimeout(() => {
               statusMessage.remove();
             }, 5000);
-            closeModal(".popup_calc_end");
             resetState(state);
+            if (form.getAttribute("data-calc") === "end") {
+              setTimeout(() => closeModal(".popup_calc_end"), 6000);
+            }
           });
       });
     }

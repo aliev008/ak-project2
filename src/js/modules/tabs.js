@@ -9,13 +9,6 @@ export const tabs = ({
     tabs = document.querySelectorAll(tabSelector),
     content = document.querySelectorAll(contentSelector);
 
-  tabs.forEach((tab) => {
-    if (tab.classList.contains("balcon_icons_img")) {
-      tab.setAttribute("tabindex", 0);
-      tab.style.outlineColor = "#ffc600";
-    }
-  });
-
   const hideTabContent = () => {
     content.forEach((tabContent) => (tabContent.style.display = "none"));
     tabs.forEach((tab) => tab.classList.remove(activeClass));

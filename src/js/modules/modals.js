@@ -1,4 +1,4 @@
-import { closeModal, closeModalByKeydown, showModal } from "./index";
+import { closeModal, showModal } from "./index";
 
 export const modals = () => {
   const bindModal = ({
@@ -19,7 +19,6 @@ export const modals = () => {
           if (e.target) {
             e.preventDefault();
           }
-
           windows.forEach((window) => {
             closeModal(window);
           });
@@ -31,12 +30,11 @@ export const modals = () => {
           console.log(`Inside test`, trigger.getAttribute("type"));
         });
       } else {
-        let previousModalWindow =
-          parseInt(modal.getAttribute("data-modal-calc"), 10) - 1;
-        let modalForm = document
-          .querySelector(`[data-modal-calc='${previousModalWindow}']`)
-          .querySelector("form");
-        console.log(modalForm);
+        const previousModalWindowNumber =
+            parseInt(modal.getAttribute("data-modal-calc"), 10) - 1,
+          modalForm = document
+            .querySelector(`[data-modal-calc='${previousModalWindowNumber}']`)
+            .querySelector("form");
 
         modalForm.addEventListener("submit", (e) => {
           e.preventDefault();
