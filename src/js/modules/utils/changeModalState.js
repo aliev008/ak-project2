@@ -41,6 +41,7 @@ export const changeModalState = (state) => {
               i === 0 ? (state[prop] = "Холодное") : (state[prop] = "Тёплое");
               elems.forEach((box, j) => {
                 box.checked = false;
+                box.required = false;
                 if (i == j) {
                   box.checked = true;
                 }
