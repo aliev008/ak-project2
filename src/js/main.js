@@ -1,10 +1,11 @@
 import "./slider";
-import { modals, tabs, forms, changeModalState } from "./modules/index";
+import { modals, tabs, forms, changeModalState, timer} from "./modules/index";
 
 window.addEventListener("DOMContentLoaded", () => {
   "use strict";
 
   let modalState = {};
+  let deadline = '2022-09-21';
 
   changeModalState(modalState);
   modals();
@@ -28,4 +29,5 @@ window.addEventListener("DOMContentLoaded", () => {
     display: "inline-block",
   });
   forms(modalState);
+  timer('.container1', deadline);
 });
