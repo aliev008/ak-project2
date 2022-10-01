@@ -3,8 +3,8 @@ export const images = () => {
         workSection = document.querySelector(".works"),
         bigImage = document.createElement("img");
 
-  workSection.appendChild(imgPopup);
-  imgPopup.appendChild(bigImage);
+  workSection.append(imgPopup);
+  imgPopup.append(bigImage);
 
   imgPopup.classList.add("popup");
   imgPopup.style.justifyContent = "center";
@@ -14,7 +14,7 @@ export const images = () => {
   workSection.addEventListener("click", (e) => {
     e.preventDefault();
 
-    let target = e.target;
+    const target = e.target;
 
     if (target && target.classList.contains("preview")) {
       imgPopup.style.display = "flex";
