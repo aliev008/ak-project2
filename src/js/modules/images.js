@@ -20,7 +20,6 @@ export const images = () => {
       imgPopup.style.display = "flex";
       const path = target.parentNode.getAttribute("href");
       bigImage.setAttribute("src", path);
-      bigImage.classList.add("works_bigImg");
       document.body.style.overflow = "hidden";
     }
 

@@ -589,7 +589,7 @@ textarea:focus {
   margin-bottom: 3rem;
 }
 
-.works .works_bigImg {
+.works .popup img {
   display: block;
   width: 550px;
   height: 450px;
