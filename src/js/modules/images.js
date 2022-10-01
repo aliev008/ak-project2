@@ -1,7 +1,7 @@
 export const images = () => {
   const imgPopup = document.createElement("div"),
-    workSection = document.querySelector(".works"),
-    bigImage = document.createElement("img");
+        workSection = document.querySelector(".works"),
+        bigImage = document.createElement("img");
 
   workSection.appendChild(imgPopup);
   imgPopup.appendChild(bigImage);
@@ -13,7 +13,6 @@ export const images = () => {
 
   workSection.addEventListener("click", (e) => {
     e.preventDefault();
-    console.log(e);
 
     let target = e.target;
 
