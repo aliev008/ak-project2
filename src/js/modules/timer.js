@@ -8,18 +8,18 @@ export const timer = (id, deadline) => {
   };
 
   const getTimeRemaining = (endTime) => {
-    const t = Date.parse(endTime) - Date.parse(new Date()),
-      seconds = Math.floor((t / 1000) % 60),
-      minutes = Math.floor((t / 1000 / 60) % 60),
-      hours = Math.floor(((t / 1000) * 60 * 60) % 24),
-      days = Math.floor(t / (1000 * 60 * 60 * 24));
+    const total = Date.parse(endTime) - Date.parse(new Date()),
+      seconds = Math.floor((total / 1000) % 60),
+      minutes = Math.floor((total / 1000 / 60) % 60),
+      hours = Math.floor(((total / 1000) * 60 * 60) % 24),
+      days = Math.floor(total / (1000 * 60 * 60 * 24));
 
     return {
-      total: t,
-      seconds: seconds,
-      minutes: minutes,
-      hours: hours,
-      days: days,
+      total,
+      seconds,
+      minutes,
+      hours,
+      days,
     };
   };
 
