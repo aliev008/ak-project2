@@ -1,11 +1,5 @@
 export const timer = (id, deadline) => {
-  const addZero = (num) => {
-    if (num <= 9) {
-      return "0" + num;
-    } else {
-      return num;
-    }
-  };
+  const addZero = (num) => (num <= 9 ? `0${num}` : num);
 
   const getTimeRemaining = (endTime) => {
     const total = Date.parse(endTime) - Date.parse(new Date()),

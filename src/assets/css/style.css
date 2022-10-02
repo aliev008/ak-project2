@@ -589,6 +589,13 @@ textarea:focus {
   margin-bottom: 3rem;
 }
 
+.works .popup img {
+  display: block;
+  width: 550px;
+  height: 450px;
+  object-fit: cover;
+}
+
 .works a[data-fancybox="gallery"] .lupa {
   /* position: ; */
   top: 0;
